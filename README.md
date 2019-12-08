@@ -1,5 +1,5 @@
-# neo-jw-bottle
-Webpack ES6 build pipeline for three.js stuffed web app.
+# neo-jm-bottle
+Webpack ES6 build pipeline for a three.js stuffed web app.
 
 ## Usage
 
@@ -32,3 +32,25 @@ npm run build
 The Difference between the `/dist` and the `/docs` folder are the different url paths in the css files.
 The `/docs` folder is only for github pages.
 
+# Configure
+
+As options for the instance:
+
+```javascript    
+const options = {
+     debug: true,
+     target: document.querySelector('body'),
+     rotate: 'orbit'
+ };
+
+// override the bottler main class  
+// with an instance of itself
+
+new BOTTLER(options).then(bottler => {
+     window.BOTTLER = bottler;
+     console.log('>>> ZACK FEDDICH. BOTTLER READY');
+ });
+```
+# URL parameters
+
+Use all options as url encoded get parameter.
