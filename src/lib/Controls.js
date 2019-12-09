@@ -32,7 +32,7 @@ export default class extends Module {
                 this._.enableHorizontalRotation();
                 this._.setMaxHorizontalRotationAngle(Math.PI / 3, Math.PI / 3);
 
-                this._.setRotationSpeed(0.03);
+                this._.setRotationSpeed(0.05);
             }
 
             resolve(this);

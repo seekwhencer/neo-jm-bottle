@@ -1,5 +1,6 @@
 import {LWOLoader} from '../../node_modules/three/examples/jsm/loaders/LWOLoader.js';
 import Module from '../Module.js';
+import CanvasTexture from './CanvasTexture/index.js';
 
 export default class extends Module {
     constructor(stage, model) {
@@ -64,66 +65,34 @@ export default class extends Module {
         this.bottleFrontLabelMaterial = this._.materials.filter(i => i.name === 'glass bottle front')[0];
         this.bottleFrontLabelMaterial.side = THREE.BackSide;
         this.bottleFrontLabelMaterial.transparent = true;
+        this.bottleFrontLabelMaterial.emissiveIntensity = 5; // this is for the brightness
+        this.bottleFrontLabelMaterial.shading = THREE.SmoothShading;
 
+        // only the image mapped... drop it. the canvas contains the background image
         //this.textureLoader = new THREE.TextureLoader();
         //this.bottleFrontLabelTexture = this.textureLoader.load("images/front01.png");
         //this.bottleFrontLabelTexture.encoding = THREE.sRGBEncoding;
         //this.bottleFrontLabelMaterial.map = this.bottleFrontLabelTexture;
 
-        this.initCanvas();
-
-        this.labelCanvasTexture = new THREE.Texture(this.canvas);
-        this.bottleCanvasMaterial = this.bottleFrontLabelMaterial;
-
-        this.bottleCanvasMaterial.shading = THREE.SmoothShading;
-        this.bottleCanvasMaterial.map = this.labelCanvasTexture;
-        this.bottleCanvasMaterial.emissiveMap = this.labelCanvasTexture;
-        this.bottleCanvasMaterial.emissiveIntensity = 5; // this is for the brightness
-        this._.materials.push(this.bottleCanvasMaterial);
+        new CanvasTexture(this, {
+            debug: true,
+            background: 'images/front01.png',
+            width: 600,
+            height: 1200,
+            className: 'bottle-label'
+        }).then(canvasTexture => {
+            this.canvasTexture = canvasTexture;
+            this.labelCanvasTexture = new THREE.Texture(this.canvasTexture.canvas);
+            this.bottleFrontLabelMaterial.map = this.labelCanvasTexture;
+            this.bottleFrontLabelMaterial.emissiveMap = this.labelCanvasTexture;
+        });
 
         console.log(this.label, '>>> MATERIALS:', this.bottleMaterial, this.bottleFrontLabelMaterial);
     }
 
-    initCanvas() {
-        this.canvas = document.createElement('canvas');
-        this.canvas.width = 600;
-        this.canvas.height = 1200;
-        this.canvas.className = "bottle-label";
-        this.canvas.transparent = true;
-        this.canvasBackground = document.createElement('img');
-        this.canvasBackground.onload = () => {
-
-        };
-        this.canvasBackground.src = 'images/front01.png';
-
-        document.querySelector('body').append(this.canvas);
-        this.ctx = this.canvas.getContext('2d');
-    }
-
-    drawCanvas() {
-        if (!this.ctx)
-            return;
-        this.ctx.save();
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.ctx.drawImage(this.canvasBackground, 0, 0, 600, 1200);
-
-        this.ctx.translate(-370,460);
-        this.ctx.rotate(-Math.PI/12.5);
-        this.ctx.fillStyle = 'black';
-        this.ctx.font = '40pt Exo-Black';
-        this.ctx.textAlign = "left";
-        this.ctx.textBaseline = "middle";
-        this.ctx.fillText(new Date().getTime(), this.canvas.width / 2, this.canvas.height / 2);
-
-        // i dont know why, but it seems that this is a trigger.
-        // maybe triggered with a setter
-        // but it is needed to update the mapped texture
-        this.labelCanvasTexture.needsUpdate = true;
-        this.ctx.restore();
-    }
-
     update() {
-        this.drawCanvas();
+        if(this.canvasTexture)
+            this.canvasTexture.drawCanvas();
     }
 
 }

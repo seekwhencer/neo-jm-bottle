@@ -41,7 +41,6 @@ export default class extends Module {
     }
 
     update(){
-        //console.log(this.label, '>>> RENDER');
         this._.render();
     }
 }
