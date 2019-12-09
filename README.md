@@ -59,3 +59,29 @@ new BOTTLER(options).then(bottler => {
 ## URL parameters
 
 Use all options as url encoded get parameter.
+
+## Extend, Use
+
+Use it in you own project:
+
+```bash
+npm install Neofonie/neo-jm-bottle
+```
+
+In your ES6 project:
+
+```javascript
+import Bottler from 'node_modules/neo-jm-bottle/src/Bottler';
+
+const options = {
+    //...
+};
+
+// inside an object
+new Bottler(options).then(bottler => this.bottler = bottler);
+
+// global
+new Bottler(options).then(bottler => window.BOTTLER = bottler);
+```
+
+It could be, that your `node_modules` folder ist reachable with some `../`.
