@@ -10,8 +10,8 @@ export default class extends Module {
 
             this.r = 0.00;
 
-            //this.ambient = new THREE.AmbientLight(0x000000);
-            //this.scene.add(this.ambient);
+            this.ambient = new THREE.AmbientLight(0x404040);
+            this.scene.add(this.ambient);
 
             // top left
             this.light1 = new THREE.PointLight(0xddcc99, 1, 40);

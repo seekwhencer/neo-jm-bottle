@@ -16,9 +16,9 @@ export default class extends Module {
             this.options = {
                 bloom: {
                     exposure: 1,
-                    bloomStrength: 3,
+                    bloomStrength: 1,
                     bloomThreshold: 0,
-                    bloomRadius: 50
+                    bloomRadius: 0.1
                 }
             };
 

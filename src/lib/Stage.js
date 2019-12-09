@@ -88,11 +88,15 @@ export default class extends Module {
         }
 
         if (this.composer) {
-            this.composer.update();
+            //this.composer.update();
         }
 
         if (this.light) {
             this.light.update();
+        }
+
+        if (this.bottle) {
+            this.bottle.update();
         }
     }
 }

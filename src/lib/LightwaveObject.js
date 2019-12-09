@@ -62,17 +62,56 @@ export default class extends Module {
         this.bottleMaterial.side = THREE.BackSide;
 
         this.bottleFrontLabelMaterial = this._.materials.filter(i => i.name === 'glass bottle front')[0];
-        this.bottleFrontLabelMaterial.side = THREE.DoubleSide;
+        this.bottleFrontLabelMaterial.side = THREE.BackSide;
         this.bottleFrontLabelMaterial.transparent = true;
 
-
-        this.textureLoader = new THREE.TextureLoader();
-        this.bottleFrontLabelTexture = this.textureLoader.load("images/front01.png");
-        this.bottleFrontLabelTexture.encoding = THREE.sRGBEncoding;
-        this.bottleFrontLabelMaterial.map = this.bottleFrontLabelTexture;
+        //this.textureLoader = new THREE.TextureLoader();
+        //this.bottleFrontLabelTexture = this.textureLoader.load("images/front01.png");
+        //this.bottleFrontLabelTexture.encoding = THREE.sRGBEncoding;
+        //this.bottleFrontLabelMaterial.map = this.bottleFrontLabelTexture;
         //this.bottleFrontLabelMaterial.map.anisotropy = 0;
 
+        this.initCanvas();
+
+        this.labelTexture = new THREE.Texture(this.canvas);
+        this.bottleFrontLabelMaterial.shading = THREE.SmoothShading;
+        this.bottleFrontLabelMaterial.map = this.labelTexture;
+        this.bottleFrontLabelMaterial.emissiveMap = this.labelTexture;
+        this.bottleFrontLabelMaterial.emissiveIntensity = 5; // this is for the brightness
+
         console.log(this.label, '>>> MATERIALS:', this.bottleMaterial, this.bottleFrontLabelMaterial);
+    }
+
+    initCanvas() {
+        this.canvas = document.createElement('canvas');
+        this.canvas.width = 600;
+        this.canvas.height = 1200;
+        this.canvas.className = "bottle-label";
+        document.querySelector('body').append(this.canvas);
+        this.ctx = this.canvas.getContext('2d');
+    }
+
+    drawCanvas() {
+        if (!this.ctx)
+            return;
+
+        this.ctx.fillStyle = 'black';
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+        this.ctx.fillStyle = 'white';
+        this.ctx.font = '40pt Arial';
+        this.ctx.textAlign = "center";
+        this.ctx.textBaseline = "middle";
+        this.ctx.fillText(new Date().getTime(), this.canvas.width / 2, this.canvas.height / 2);
+
+        // i dont know why, but it seems that this is a trigger.
+        // maybe triggered with a setter
+        // but it is needed to update the mapped texture
+        this.labelTexture.needsUpdate = true;
+    }
+
+    update() {
+        this.drawCanvas();
     }
 
 }
