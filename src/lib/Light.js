@@ -8,8 +8,10 @@ export default class extends Module {
             this.scene = this.stage.scene;
             this.label = 'LIGHT';
 
-            this.ambient = new THREE.AmbientLight(0x404040);
-            this.scene.add(this.ambient);
+            this.r = 0.00;
+
+            //this.ambient = new THREE.AmbientLight(0x000000);
+            //this.scene.add(this.ambient);
 
             // top left
             this.light1 = new THREE.PointLight(0xddcc99, 1, 40);
@@ -18,7 +20,7 @@ export default class extends Module {
 
             // top right
             this.light2 = new THREE.PointLight(0xddcc99, 1, 40);
-            this.light2.position.set(15, 10, 10);
+            this.light2.position.set(15, 10, 20);
             this.light2.castShadow = false;
 
             // top left
@@ -28,18 +30,28 @@ export default class extends Module {
 
             // top right
             this.light4 = new THREE.PointLight(0xddcc99, 1, 40);
-            this.light4.position.set(15, -10, 10);
+            this.light4.position.set(15, -10, 20);
             this.light4.castShadow = false;
 
-
+            // rotating front light
+            this.light5 = new THREE.PointLight(0xddcc99, 1, 40);
+            this.light5.position.set(0, 0, 20);
+            this.light5.castShadow = false;
 
             this.scene.add(this.light1);
             this.scene.add(this.light2);
             this.scene.add(this.light3);
             this.scene.add(this.light4);
+            this.scene.add(this.light5);
 
             resolve(this);
         });
 
+    }
+
+    update(){
+        this.light5.position.x = 10 * Math.cos( this.r );
+        this.light5.position.y = 10 * Math.sin( this.r );
+        this.r += 0.01;
     }
 }

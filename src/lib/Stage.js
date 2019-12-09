@@ -5,6 +5,7 @@ import Renderer from './Renderer.js';
 import Light from './Light.js';
 import Controls from './controls.js';
 import LightwaveObject from './LightwaveObject.js';
+import EffectComposer from './EffectComposer.js';
 
 export default class extends Module {
     constructor(args) {
@@ -29,6 +30,10 @@ export default class extends Module {
                 })
                 .then(renderer => {
                     this.renderer = renderer;
+                    return new EffectComposer(this);
+                })
+                .then(composer => {
+                    this.composer = composer;
                     return new Light(this);
                 })
                 .then(light => {
@@ -58,18 +63,36 @@ export default class extends Module {
 
     animate() {
         requestAnimationFrame(() => this.animate());
-        if (this.controls)
-            this.controls.update();
-
+        this.update();
         this.renderer._.render(this.scene._, this.camera._);
     }
 
     onWindowResize() {
-        const dim = this.app.target.getBoundingClientRect();
-        this.camera._.aspect = dim.width / dim.height;
+        const width = this.app.getWidth();
+        const height = this.app.getHeight();
+
+        this.camera._.fov = this.camera.options.fov || 75;
+        this.camera._.aspect = width / height;
+        this.camera._.near = this.camera.options.near || 0.1;
+        this.camera._.far = this.camera.options.far || 1000;
+
+        this.renderer._.setSize(width, height);
         this.camera._.updateProjectionMatrix();
-        this.renderer._.setSize(dim.width, dim.height);
-        if (this.controls)
+
+        this.update();
+    }
+
+    update(){
+        if (this.controls) {
             this.controls.update();
+        }
+
+        if (this.composer) {
+            this.composer.update();
+        }
+
+        if (this.light) {
+            this.light.update();
+        }
     }
 }

@@ -16,6 +16,7 @@ export default class extends Module {
                 },
                 alpha: true,
             });
+
             const dim = this.app.target.getBoundingClientRect();
             this._.setSize(dim.width, dim.height);
             resolve(this);

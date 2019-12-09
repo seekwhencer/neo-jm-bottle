@@ -28,11 +28,11 @@ export default class extends Module {
                 this._.setZoomSpeed(0.5); // set zoom speed
 
                 this._.enableVerticalRotation();
-                this._.setMaxVerticalRotationAngle(Math.PI / 8, Math.PI / 8);
+                this._.setMaxVerticalRotationAngle(Math.PI / 3, Math.PI / 3);
                 this._.enableHorizontalRotation();
-                this._.setMaxHorizontalRotationAngle(Math.PI / 8, Math.PI / 8);
+                this._.setMaxHorizontalRotationAngle(Math.PI / 3, Math.PI / 3);
 
-                this._.setRotationSpeed(0.02);
+                this._.setRotationSpeed(0.03);
             }
 
             resolve(this);

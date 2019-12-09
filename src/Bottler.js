@@ -38,4 +38,11 @@ export default class extends Module {
         const params = QueryString.parse(query, {plainObjects: true});
         this.options = RAMDA.mergeDeepLeft(params, this.options);
     }
+
+    getWidth() {
+        return this.target.getBoundingClientRect().width;
+    }
+    getHeight() {
+        return this.target.getBoundingClientRect().height;
+    }
 }

@@ -50,13 +50,8 @@ export default class extends Module {
 
     initObject() {
         this.scene.add(this._.meshes[0]);
-        //this.scene.add(this._.meshes[1]);
-
         this._.meshes[0].scale.set(50, 50, 50);
-        //this._.meshes[1].scale.set(50, 50, 50);
-
         this._.meshes[0].renderOrder = 1;
-        //this._.meshes[1].renderOrder = 0;
 
         console.log(this.label, '>>> ADDED MESHES:', this._.meshes.length, this._.meshes);
         console.log(this.label, '>>> ADDED MATERIALS:', this._.materials.length, this._.materials);
@@ -66,11 +61,6 @@ export default class extends Module {
         this.bottleMaterial.opacity = 0.6;
         this.bottleMaterial.side = THREE.BackSide;
 
-/*        this.bottleFilledMaterial = this._.materials.filter(i => i.name === 'glass filled')[0];
-        this.bottleFilledMaterial.transparent = true;
-        this.bottleFilledMaterial.opacity = 0.5;
-        this.bottleFilledMaterial.side = THREE.FrontSide;
-*/
         this.bottleFrontLabelMaterial = this._.materials.filter(i => i.name === 'glass bottle front')[0];
         this.bottleFrontLabelMaterial.side = THREE.DoubleSide;
         this.bottleFrontLabelMaterial.transparent = true;
@@ -80,7 +70,9 @@ export default class extends Module {
         this.bottleFrontLabelTexture = this.textureLoader.load("images/front01.png");
         this.bottleFrontLabelTexture.encoding = THREE.sRGBEncoding;
         this.bottleFrontLabelMaterial.map = this.bottleFrontLabelTexture;
+        //this.bottleFrontLabelMaterial.map.anisotropy = 0;
 
         console.log(this.label, '>>> MATERIALS:', this.bottleMaterial, this.bottleFrontLabelMaterial);
     }
+
 }
