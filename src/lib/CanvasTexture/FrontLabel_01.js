@@ -37,7 +37,7 @@ export default class extends CanvasTexture {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.drawImage(this.canvasBackground, 0, 0, this.options.width, this.options.height);
 
-        this.ctx.translate(-150, 400);
+        this.ctx.translate(-150, 350);
         this.ctx.rotate(-Math.PI / 12.5);
         this.ctx.fillStyle = 'black';
         this.ctx.font = '40pt Exo-Black';

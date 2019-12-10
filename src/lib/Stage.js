@@ -8,10 +8,16 @@ import BottleModel from './Models/Bottle.js';
 import EffectComposer from './EffectComposer.js';
 
 export default class extends Module {
-    constructor(args) {
+    constructor(app, options) {
         super();
         return new Promise((resolve, reject) => {
-            this.app = args;
+            this.app = app;
+
+            this.defaults = {
+                composer: false
+            };
+            this.options = {...this.defaults, ...options};
+
             this.label = 'STAGE';
 
             this.on('ready', () => {
@@ -41,8 +47,8 @@ export default class extends Module {
                     return new BottleModel(this, {
                         debug: true,
                         background: 'images/front01.png',
-                        width: 600,
-                        height: 1200,
+                        width: 512,
+                        height: 1024,
                         className: 'bottle-label',
                         update: true
                     });
@@ -70,7 +76,12 @@ export default class extends Module {
 
     animate() {
         this.update();
-        this.renderer._.render(this.scene._, this.camera._);
+        if (!this.options.composer) {
+            this.renderer._.render(this.scene._, this.camera._);
+        } else {
+            if (this.composer)
+                this.composer.update();
+        }
         requestAnimationFrame(() => this.animate());
     }
 
@@ -89,13 +100,9 @@ export default class extends Module {
         this.update();
     }
 
-    update(){
+    update() {
         if (this.controls) {
             this.controls.update();
-        }
-
-        if (this.composer) {
-            //this.composer.update();
         }
 
         if (this.light) {
@@ -105,5 +112,9 @@ export default class extends Module {
         if (this.bottle) {
             this.bottle.update();
         }
+
+        if (TWEEN.update)
+            TWEEN.update();
+
     }
 }

@@ -1,6 +1,5 @@
 import {LWOLoader} from '../../node_modules/three/examples/jsm/loaders/LWOLoader.js';
 import Module from '../Module.js';
-import CanvasTexture from './CanvasTexture/index.js';
 
 export default class extends Module {
     constructor(stage, model) {

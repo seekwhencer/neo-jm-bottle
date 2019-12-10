@@ -9,7 +9,7 @@ export default class extends Module {
             this.label = 'CAMERA';
 
             this.options = {
-                fov: 75,
+                fov: 30,
                 aspect: this.stage.app.getWidth() / this.stage.app.getHeight(),
                 near: 0.1,
                 far: 1000
@@ -17,8 +17,7 @@ export default class extends Module {
 
             this._ = new THREE.PerspectiveCamera(this.options.fov, this.options.aspect, this.options.near, this.options.far);
             this._.near = 0;
-            this._.position.set(0, 0, 15);
-            //this._.position.set(3, -2, 15);
+            this._.position.set(0, 0, 35);
             resolve(this);
         });
     }

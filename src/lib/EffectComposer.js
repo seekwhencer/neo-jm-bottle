@@ -27,10 +27,12 @@ export default class extends Module {
             this.bloomPass.strength = this.options.bloom.bloomStrength;
             this.bloomPass.radius = this.options.bloom.bloomRadius;
 
-            this.renderScene = new RenderPass(this.stage.scene._, this.stage.camera._);
+            this.renderPass = new RenderPass(this.stage.scene._, this.stage.camera._);
+            this.renderPass.clearColor = new THREE.Color(0, 0, 0);
+            this.renderPass.clearAlpha = 0;
 
             this._ = new EffectComposer(this.stage.renderer._);
-            this._.addPass(this.renderScene);
+            this._.addPass(this.renderPass);
             this._.addPass(this.bloomPass);
 
             this.stage.renderer._.toneMapping = THREE.ReinhardToneMapping;
@@ -40,7 +42,7 @@ export default class extends Module {
 
     }
 
-    update(){
+    update() {
         this._.render();
     }
 }

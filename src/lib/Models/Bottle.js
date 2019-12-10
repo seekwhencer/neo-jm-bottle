@@ -18,9 +18,13 @@ export default class extends LightwaveObject {
                 update: true
             };
             this.options = {...this.defaults, ...options};
-
             this.label = 'BOTTLE MODEL';
-            this.on('ready', () => resolve(this));
+            this.on('ready', () => {
+                wait(2000).then(() => {
+                    this.move();
+                });
+                resolve(this);
+            });
         });
     }
 
@@ -75,4 +79,19 @@ export default class extends LightwaveObject {
         if (this.canvasTexture)
             this.canvasTexture.drawCanvas();
     }
+
+    move() {
+        return new Promise(resolve => {
+            const duration = 2000;
+            const data = {x: 0.0, y: 0.0, z: 0.0};
+            const to = {x: 7, y: 0.0, z: 0.0};
+            new TWEEN.Tween(data)
+                .to(to, duration)
+                .easing(TWEEN.Easing.Elastic.InOut)
+                .onUpdate(() => this._.meshes[0].position.set(data.x, data.y, data.z))
+                .onComplete(() => resolve())
+                .start();
+        });
+    }
+
 }
