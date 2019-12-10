@@ -8,7 +8,12 @@ export default class extends Module {
         this.stage = this.model.stage;
         this.scene = this.stage.scene;
         this.defaults = {
-            debug: true
+            debug: true,
+            background: 'images/front01.png',
+            width: 600,
+            height: 1200,
+            className: 'bottle-label',
+            update: true
         };
         this.options = {...this.defaults, ...options};
         this.label = 'CANVAS TEXTURE';

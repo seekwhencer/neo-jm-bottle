@@ -2,12 +2,23 @@ import LightwaveObject from '../LightwaveObject.js';
 import FrontLabelCanvas from "../CanvasTexture/FrontLabel_01.js";
 
 export default class extends LightwaveObject {
-    constructor(stage) {
+    constructor(stage, options) {
         super(stage, 'bottle');
 
         return new Promise((resolve, reject) => {
             this.stage = stage;
             this.scene = this.stage.scene;
+
+            this.defaults = {
+                debug: true,
+                background: 'images/front01.png',
+                width: 600,
+                height: 1200,
+                className: 'bottle-label',
+                update: true
+            };
+            this.options = {...this.defaults, ...options};
+
             this.label = 'BOTTLE MODEL';
             this.on('ready', () => resolve(this));
         });
@@ -47,13 +58,7 @@ export default class extends LightwaveObject {
         //this.bottleFrontLabelTexture.encoding = THREE.sRGBEncoding;
         //this.bottleFrontLabelMaterial.map = this.bottleFrontLabelTexture;
 
-        new FrontLabelCanvas(this, {
-            debug: true,
-            background: 'images/front01.png',
-            width: 600,
-            height: 1200,
-            className: 'bottle-label'
-        }).then(canvasTexture => {
+        new FrontLabelCanvas(this, this.options).then(canvasTexture => {
             this.canvasTexture = canvasTexture;
             this.labelCanvasTexture = new THREE.Texture(this.canvasTexture.canvas);
             this.bottleFrontLabelMaterial.map = this.labelCanvasTexture;

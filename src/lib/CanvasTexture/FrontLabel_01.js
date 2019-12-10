@@ -16,6 +16,7 @@ export default class extends CanvasTexture {
                 className: 'bottle-label',
                 update: true
             };
+            // this defaults override the root class options, and the given options overrides all
             this.options = {...this.options, ...this.defaults, ...options};
 
             this.label = 'CANVAS TEXTURE';
@@ -25,6 +26,9 @@ export default class extends CanvasTexture {
         });
     }
 
+    /**
+     * this function is very custom to draw the canvas
+     */
     drawCanvas() {
         if (!this.ctx)
             return;
@@ -45,9 +49,11 @@ export default class extends CanvasTexture {
         this.ctx.restore();
     }
 
-    // i dont know why, but it seems that this is a trigger.
-    // maybe triggered with a setter
-    // but it is needed to update the mapped texture
+    /**
+     * i dont know why, but it seems that this is a trigger.
+     * but it is needed to update the mapped texture
+     * called from the stage.update() as stage.bottle.update()
+     */
     update() {
         this.options.update ? this.model.labelCanvasTexture.needsUpdate = true : null;
     }

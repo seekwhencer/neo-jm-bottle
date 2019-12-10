@@ -38,7 +38,14 @@ export default class extends Module {
                 })
                 .then(light => {
                     this.light = light;
-                    return new BottleModel(this);
+                    return new BottleModel(this, {
+                        debug: true,
+                        background: 'images/front01.png',
+                        width: 600,
+                        height: 1200,
+                        className: 'bottle-label',
+                        update: true
+                    });
                 })
                 .then(bottle => {
                     this.bottle = bottle;
