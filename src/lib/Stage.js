@@ -4,7 +4,7 @@ import Camera from './Camera.js';
 import Renderer from './Renderer.js';
 import Light from './Light.js';
 import Controls from './controls.js';
-import LightwaveObject from './LightwaveObject.js';
+import BottleModel from './Models/Bottle.js';
 import EffectComposer from './EffectComposer.js';
 
 export default class extends Module {
@@ -38,7 +38,7 @@ export default class extends Module {
                 })
                 .then(light => {
                     this.light = light;
-                    return new LightwaveObject(this, 'bottle');
+                    return new BottleModel(this);
                 })
                 .then(bottle => {
                     this.bottle = bottle;
@@ -62,9 +62,9 @@ export default class extends Module {
     }
 
     animate() {
-        requestAnimationFrame(() => this.animate());
         this.update();
         this.renderer._.render(this.scene._, this.camera._);
+        requestAnimationFrame(() => this.animate());
     }
 
     onWindowResize() {
