@@ -23,7 +23,7 @@ export default class extends Module {
             }
 
             if (this.options.rotate === 'model') {
-                this._ = new THREE.ObjectControls(this.stage.camera._, this.stage.renderer._.domElement, this.stage.bottle._.meshes[0]);
+                this._ = new THREE.ObjectControls(this.stage.camera._, this.stage.renderer._.domElement, this.stage.bottles.bottle._.meshes[0]);
                 this._.setDistance(8, 36); // set min - max distance for zoom
                 this._.setZoomSpeed(0.5); // set zoom speed
 

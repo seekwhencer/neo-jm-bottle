@@ -51,12 +51,12 @@ export default class extends LightwaveObject {
         this.bottleMaterial.side = THREE.BackSide;
 
         // @TODO
-        this.envMap = new THREE.TextureLoader().load("images/front01.png");
+        /*this.envMap = new THREE.TextureLoader().load("images/front01.png");
         this.bottleMaterial.envMap = this.envMap;
         this.bottleMaterial.reflectivity = 1.0;
         this.bottleMaterial.mapping = THREE.SphericalReflectionMapping; //THREE.SphericalReflectionMapping;
         this.bottleMaterial.encoding = THREE.sRGBEncoding;
-        this.bottleMaterial.needsUpdate = true;
+        this.bottleMaterial.needsUpdate = true;*/
 
         this.bottleFrontLabelMaterial = this._.materials.filter(i => i.name === 'glass bottle front')[0];
         this.bottleFrontLabelMaterial.side = THREE.BackSide;
@@ -83,7 +83,6 @@ export default class extends LightwaveObject {
 
     update() {
         super.update();
-
         if (this.canvasTexture)
             this.canvasTexture.drawCanvas();
     }
@@ -94,7 +93,9 @@ export default class extends LightwaveObject {
             const duration = 2000;
             const data = from;// || {x: -0, y: 0, z: 0};
             // const to = to; // || {x: 7, y: 0, z: 0};
-            new TWEEN.Tween(data)
+
+            this.stop();
+            this.movement = new TWEEN.Tween(data)
                 .to(to, duration)
                 .easing(TWEEN.Easing.Quintic.InOut)
                 .onUpdate(() => {
@@ -103,6 +104,11 @@ export default class extends LightwaveObject {
                 .onComplete(() => resolve())
                 .start();
         });
+    }
+
+    stop(){
+        if(this.movement)
+            this.movement.stop();
     }
 
 }

@@ -25,7 +25,7 @@ export default class extends Module {
         this.canvas.transparent = true;
         this.canvasBackground = document.createElement('img');
         this.canvasBackground.onload = () => {
-
+            console.log('>>>>>>>>>> IMAGE LOADED', this.options);
         };
 
         this.options.debug ? document.querySelector('body').append(this.canvas) : null;

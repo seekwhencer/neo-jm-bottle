@@ -4,8 +4,8 @@ import Camera from './Camera.js';
 import Renderer from './Renderer.js';
 import Light from './Light.js';
 import Controls from './Controls.js';
-import BottleModel from './Models/Bottle.js';
 import EffectComposer from './EffectComposer.js';
+import Bottles from './Bottles.js';
 
 export default class extends Module {
     constructor(app, options) {
@@ -44,17 +44,10 @@ export default class extends Module {
                 })
                 .then(light => {
                     this.light = light;
-                    return new BottleModel(this, {
-                        debug: true,
-                        background: 'images/front01.png',
-                        width: 512,
-                        height: 1024,
-                        className: 'bottle-label',
-                        update: true
-                    });
+                    return new Bottles(this);
                 })
-                .then(bottle => {
-                    this.bottle = bottle;
+                .then(bottles => {
+                    this.bottles = bottles;
                     return new Controls(this);
                 })
                 .then(controls => {
@@ -100,6 +93,10 @@ export default class extends Module {
         this.update();
     }
 
+    /**
+     *  this is the main update function
+     *
+     */
     update() {
         if (this.controls) {
             this.controls.update();
@@ -109,8 +106,8 @@ export default class extends Module {
             this.light.update();
         }
 
-        if (this.bottle) {
-            this.bottle.update();
+        if (this.bottles) {
+            this.bottles.update();
         }
 
         if (TWEEN.update)

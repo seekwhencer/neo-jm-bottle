@@ -20,6 +20,8 @@ export default class extends CanvasTexture {
             this.options = {...this.options, ...this.defaults, ...options};
 
             this.label = 'CANVAS TEXTURE';
+            console.log(this.label, '>>> INIT');
+
             this.on('ready', () => resolve(this));
             this.canvasBackground.src = this.options.background;
             this.emit('ready');

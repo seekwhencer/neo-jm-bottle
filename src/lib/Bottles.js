@@ -1,5 +1,5 @@
-import Module from '../../Module.js';
-import BottleModel from "./Bottle.js";
+import Module from '../Module.js';
+import BottleModel from "./Models/Bottle.js";
 
 export default class extends Module {
     constructor(stage, options) {
@@ -30,5 +30,9 @@ export default class extends Module {
             });
 
         });
+    }
+
+    update(){
+        this.bottle.update();
     }
 }
