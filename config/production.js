@@ -88,7 +88,7 @@ module.exports = class extends ConfigClass {
                             fs.copySync(`${this.appPath}/dist/prod`, `${this.appPath}/docs`);
 
                             sedReplace('/css', '/neo-jm-bottle/css', `${this.appPath}/docs/css/app.css`);
-                            sedReplace('/images', '/neo-jm-bottle/images', `${this.appPath}/docs/css/app.css`);
+                            //sedReplace('/images', '/neo-jm-bottle/images', `${this.appPath}/docs/css/app.css`);
                             sedReplace('?hash', `?${this.hash}`, `${this.appPath}/docs/index.html`);
                             sedReplace('debug: true', 'debug: false', `${this.appPath}/docs/index.html`);
                         });
