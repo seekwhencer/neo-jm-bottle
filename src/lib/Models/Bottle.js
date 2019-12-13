@@ -19,12 +19,20 @@ export default class extends LightwaveObject {
             };
             this.options = {...this.defaults, ...options};
             this.label = 'BOTTLE MODEL';
+
             this.on('ready', () => {
-                wait(2000).then(() => {
-                    this.move();
-                });
-                resolve(this);
+
+                // try out with tween.js
+                // but wrap it in promises
+                // hmmmm... yummy
+                wait(2000)
+                    .then(() => this.move({x: 7, y: 0, z: 0}, {x: 0, y: 0, z: 0}))
+                    .then(() => this.move({x: -7, y: 0, z: 0}, {x: 7, y: 0, z: 0}))
+                    .then(() => this.move({x: 0, y: 0, z: 0}, {x: -7, y: 0, z: 0}));
+
+                resolve(this)
             });
+
         });
     }
 
@@ -80,15 +88,18 @@ export default class extends LightwaveObject {
             this.canvasTexture.drawCanvas();
     }
 
-    move() {
+    move(to, from) {
+        console.log(this.label, '>>> MOVING TO:', JSON.stringify(to));
         return new Promise(resolve => {
             const duration = 2000;
-            const data = {x: 0.0, y: 0.0, z: 0.0};
-            const to = {x: 7, y: 0.0, z: 0.0};
+            const data = from;// || {x: -0, y: 0, z: 0};
+            // const to = to; // || {x: 7, y: 0, z: 0};
             new TWEEN.Tween(data)
                 .to(to, duration)
-                .easing(TWEEN.Easing.Elastic.InOut)
-                .onUpdate(() => this._.meshes[0].position.set(data.x, data.y, data.z))
+                .easing(TWEEN.Easing.Quintic.InOut)
+                .onUpdate(() => {
+                    this._.meshes[0].position.set(data.x, data.y, data.z);
+                })
                 .onComplete(() => resolve())
                 .start();
         });
