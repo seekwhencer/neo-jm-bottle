@@ -3,7 +3,7 @@ import Scene from './Scene.js';
 import Camera from './Camera.js';
 import Renderer from './Renderer.js';
 import Light from './Light.js';
-import Controls from './controls.js';
+import Controls from './Controls.js';
 import BottleModel from './Models/Bottle.js';
 import EffectComposer from './EffectComposer.js';
 
