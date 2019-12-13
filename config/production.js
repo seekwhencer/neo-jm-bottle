@@ -40,6 +40,18 @@ module.exports = class extends ConfigClass {
                         loader: "template-literals-loader"
                     },
                     {
+                        test: /\.(png|svg|jpg|gif|jpe?g)$/,
+                        use: [
+                            {
+                                options: {
+                                    name: "[name].[ext]",
+                                    outputPath: "../images/"
+                                },
+                                loader: "file-loader"
+                            }
+                        ]
+                    },
+                    {
                         test: /\.scss$/,
                         use: [
                             'style-loader',
