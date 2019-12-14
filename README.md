@@ -2,7 +2,7 @@
 Webpack ES6 build pipeline for a three.js stuffed web app.
 
  
-![alt text](../master/public/screenshots/bottler01.png?raw=true "Bottler Screenshot #01")
+![alt text](../master/public/screenshots/bottler01.jpg?raw=true "Bottler Screenshot #01")
 
 
 ## Usage
