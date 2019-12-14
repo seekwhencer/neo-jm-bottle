@@ -24,17 +24,7 @@ export default class extends LightwaveObject {
             this.label = 'BOTTLE MODEL';
 
             this.on('ready', () => {
-
-                // try out with tween.js
-                // but wrap it in promises
-                // hmmmm... yummy
-                wait(1000)
-                    .then(() => this.show())
-                    .then(() => this.move({x: this.options.x_to, y:  this.options.y_to, z: this.options.z_to}, {x: this.options.x, y: this.options.y, z: this.options.z}));
-                    //.then(() => this.move({x: -7, y: 0, z: 0}, {x: 7, y: 0, z: 0}))
-                    //.then(() => this.move({x: this.options.x, y: this.options.y, z: this.options.z}, {x: -7, y: 0, z: 0}));
-
-                resolve(this)
+                resolve(this);
             });
 
         });
@@ -79,10 +69,12 @@ export default class extends LightwaveObject {
             this.labelCanvasTexture = new THREE.Texture(this.canvasTexture.canvas);
             this.bottleFrontLabelMaterial.map = this.labelCanvasTexture;
             this.bottleFrontLabelMaterial.emissiveMap = this.labelCanvasTexture;
+
+            console.log(this.label, '>>> MATERIALS:', this.bottleMaterial, this.bottleFrontLabelMaterial);
+            this.emit('ready');
         });
 
-        console.log(this.label, '>>> MATERIALS:', this.bottleMaterial, this.bottleFrontLabelMaterial);
-        this.emit('ready');
+
     }
 
     update() {
@@ -92,8 +84,8 @@ export default class extends LightwaveObject {
     }
 
     move(to, from) {
-        console.log(this.label, '>>> MOVING TO:', JSON.stringify(to));
         return new Promise(resolve => {
+            console.log(this.label, '>>> MOVING TO:', JSON.stringify(to));
             const duration = 5000;
             const data = from;// || {x: -0, y: 0, z: 0};
             // const to = to; // || {x: 7, y: 0, z: 0};
@@ -104,15 +96,43 @@ export default class extends LightwaveObject {
                 .easing(TWEEN.Easing.Quintic.InOut)
                 .onUpdate(() => {
                     this._.meshes[0].position.set(data.x, data.y, data.z);
-                })
-                .onComplete(() => resolve())
-                .start();
+                });
+
+            // not working.
+            /*this.movement.onComplete(() => {
+                console.log('>>>>>>>>>>>>!!!!');
+                resolve();
+            });*/
+
+            this.movement.start();
+
+            // on complete replacement
+            setTimeout(() => {
+                console.log(this.label, '>>> MOVEMENT COMPLETE');
+                resolve();
+            }, duration);
         });
     }
 
-    stop(){
-        if(this.movement)
+    stop() {
+        if (this.movement)
             this.movement.stop();
+    }
+
+    moveIn() {
+        // try out with tween.js
+        // but wrap it in promises
+        // hmmmm... yummy
+        return wait(10).then(() => {
+            this.show();
+            return this.move({
+                x: this.options.x_to,
+                y: this.options.y_to,
+                z: this.options.z_to
+            }, {x: this.options.x, y: this.options.y, z: this.options.z});
+        });
+        //.then(() => this.move({x: -7, y: 0, z: 0}, {x: 7, y: 0, z: 0}))
+        //.then(() => this.move({x: this.options.x, y: this.options.y, z: this.options.z}, {x: -7, y: 0, z: 0}));
     }
 
 }

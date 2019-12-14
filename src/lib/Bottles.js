@@ -20,10 +20,10 @@ export default class extends Module {
                         background: 'images/front01.png',
                         width: 512,
                         height: 1024,
-                        className: 'bottle-label',
+                        className: 'bottle-label bottle-label-01',
                         update: true,
                         x: 0,
-                        y: -20,
+                        y: -17,
                         z: 0,
                         x_to: 0,
                         y_to: 0,
@@ -37,7 +37,7 @@ export default class extends Module {
                         background: 'images/front02.png',
                         width: 512,
                         height: 1024,
-                        className: 'bottle-label',
+                        className: 'bottle-label bottle-label-02',
                         update: true,
                         x: 0,
                         y: -20,
@@ -54,7 +54,7 @@ export default class extends Module {
                         background: 'images/front03.png',
                         width: 512,
                         height: 1024,
-                        className: 'bottle-label',
+                        className: 'bottle-label bottle-label-03',
                         update: true,
                         x: 0,
                         y: -20,
@@ -70,6 +70,7 @@ export default class extends Module {
                 });
 
             this.on('ready', () => {
+                this.moveIn();
                 resolve(this)
             });
 
@@ -78,6 +79,10 @@ export default class extends Module {
 
     update() {
         this.items.map(i => i.update());
+    }
+
+    moveIn(){
+        this.items.map(i => i.moveIn());
     }
 
     get bottle() {

@@ -75,15 +75,15 @@ body {
     width: 100px;
     background: transparent;
 
-    &:nth-child(1){
+    &.bottle-label-01 {
         left: 0;
     }
 
-    &:nth-child(2){
+    &.bottle-label-02 {
         left: 120px;
     }
 
-    &:nth-child(2){
+    &.bottle-label-03 {
         left: 240px;
     }
 }

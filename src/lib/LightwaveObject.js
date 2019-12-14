@@ -54,10 +54,12 @@ export default class extends Module {
 
     show(){
         this._.meshes[0].visible = true;
+        console.log(this.label, '>>> SHOWING', this._.meshes[0]);
     }
 
     hide(){
         this._.meshes[0].visible = false;
+        console.log(this.label, '>>> HIDING', this._.meshes[0]);
     }
 
 }
