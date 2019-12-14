@@ -15,7 +15,10 @@ export default class extends LightwaveObject {
                 width: 600,
                 height: 1200,
                 className: 'bottle-label',
-                update: true
+                update: true,
+                x: 0,
+                y: 0,
+                z: 0
             };
             this.options = {...this.defaults, ...options};
             this.label = 'BOTTLE MODEL';
@@ -25,10 +28,11 @@ export default class extends LightwaveObject {
                 // try out with tween.js
                 // but wrap it in promises
                 // hmmmm... yummy
-                wait(2000)
-                    .then(() => this.move({x: 7, y: 0, z: 0}, {x: 0, y: 0, z: 0}))
-                    .then(() => this.move({x: -7, y: 0, z: 0}, {x: 7, y: 0, z: 0}))
-                    .then(() => this.move({x: 0, y: 0, z: 0}, {x: -7, y: 0, z: 0}));
+                wait(1000)
+                    .then(() => this.show())
+                    .then(() => this.move({x: this.options.x_to, y:  this.options.y_to, z: this.options.z_to}, {x: this.options.x, y: this.options.y, z: this.options.z}));
+                    //.then(() => this.move({x: -7, y: 0, z: 0}, {x: 7, y: 0, z: 0}))
+                    //.then(() => this.move({x: this.options.x, y: this.options.y, z: this.options.z}, {x: -7, y: 0, z: 0}));
 
                 resolve(this)
             });
@@ -90,7 +94,7 @@ export default class extends LightwaveObject {
     move(to, from) {
         console.log(this.label, '>>> MOVING TO:', JSON.stringify(to));
         return new Promise(resolve => {
-            const duration = 2000;
+            const duration = 5000;
             const data = from;// || {x: -0, y: 0, z: 0};
             // const to = to; // || {x: 7, y: 0, z: 0};
 

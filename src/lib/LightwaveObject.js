@@ -34,6 +34,7 @@ export default class extends Module {
             this.loader.load(`models/${model}.lwo`,
                 obj => {
                     this._ = obj;
+                    this.hide();
                     console.log(this.label, '>>> LOADED');
                     resolve();
                 },
@@ -49,6 +50,14 @@ export default class extends Module {
 
     update() {
         //... do something here
+    }
+
+    show(){
+        this._.meshes[0].visible = true;
+    }
+
+    hide(){
+        this._.meshes[0].visible = false;
     }
 
 }

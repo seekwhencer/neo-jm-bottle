@@ -68,12 +68,22 @@ body {
     }
 }
 
-
 .bottle-label {
     position: absolute;
     top: 0;
-    left: 0;
     z-index: 1000;
-    width: 200px;
+    width: 100px;
     background: transparent;
+
+    &:nth-child(1){
+        left: 0;
+    }
+
+    &:nth-child(2){
+        left: 120px;
+    }
+
+    &:nth-child(2){
+        left: 240px;
+    }
 }
